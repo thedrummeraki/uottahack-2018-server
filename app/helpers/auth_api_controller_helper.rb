@@ -1,0 +1,2 @@
+module AuthApiControllerHelper
+end
