@@ -60,7 +60,7 @@ group :test do
 end
 
 group :production do
-  gem 'pg'
+  gem 'pg', '~> 0.18'
   gem 'rails_12factor'
   gem 'rack-cache', :require => 'rack/cache'
 end
