@@ -4,7 +4,7 @@ class ApiController < ApplicationController
 
     def new_auth_token
         client_ip = request.remote_ip
-        client_session = ClientSession.create_or_get client_ip
+        client_session = ClientSession.create_new
         render json: {
             success: true,
             auth_token: client_session.auth_token
