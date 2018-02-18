@@ -4,6 +4,16 @@ class Ticket < ApplicationRecord
     before_save :check_in_use
     before_save :ensure_ticket_has_code
 
+    def wait_time
+        if self.in_use
+            h = rand(3); m = rand(60)
+            a = true
+        else
+            h = nil; m = nil; a = false
+        end
+        {hours: h, mins: m, approximate: a}
+    end
+
     def mark_used
         self.update_attributes in_use: true
     end
