@@ -45,7 +45,7 @@ class AuthApiController < ApplicationController
      end
 
      ticket = Ticket.find_by(ticket_code: ticket_code)
-     if ticket.in_use
+     if !ticket.nil? && ticket.in_use
         render json: {
             success: false,
             message: "The ticket \"#{ticket_code}\" is already in use. Please add another one.",
