@@ -47,11 +47,11 @@ class AuthApiController < ApplicationController
      ticket = Ticket.find_by(ticket_code: ticket_code)
      if !ticket.nil? && ticket.in_use
         render json: {
-            success: false,
+            success: true,
             message: "The ticket \"#{ticket_code}\" is already in use. Please add another one.",
             reason: "Duplicate ticket",
             errors: [],
-            ticket: nil
+            ticket: ticket
         }
         return
      elsif !ticket.nil?
@@ -106,7 +106,9 @@ class AuthApiController < ApplicationController
      current = Ticket.current
      render json: {
         success: !current.nil?,
-        ticket: current
+        ticket: current,
+        message: ("Please add at least on ticket on the system." if current.nil?),
+        reason: ("No ticket on the system (yet)." if current.nil?)
      }
   end
 
@@ -127,6 +129,25 @@ class AuthApiController < ApplicationController
             wait_time: ticket.wait_time,
             ticket: ticket
         }
+     end
+  end
+
+  def get_location
+     location = Location.find_by params[:location_id]
+     if location.nil?
+       render json: {
+        success: false,
+        message: "The specified location either does not exist or was deleted.",
+        reason: "Unknown location id",
+        location: nil
+       }
+     else
+      render json: {
+        success: true,
+        message: nil,
+        reason: nil,
+        location: location
+      }
      end
   end
 

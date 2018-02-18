@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   # GET routes
   get "/api/tickets/current" => "auth_api#current_number" # OK
   get "/api/tickets/wait-time" => "auth_api#wait_time" # OK
+  get "/api/location" => "auth_api#get_location"
 
   # POST modifier URLs
   post "/api/tickets/new" => "auth_api#add_ticket" # OK
