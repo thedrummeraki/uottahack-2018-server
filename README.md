@@ -14,9 +14,9 @@ https://uottahack-2018.herokuapp.com
 You will get a JSON error body looking like the following:
 ```json
 {
-	success: false,
-	message: "An error message",
-	reason: "A simpler error message (if necessary)"
+	"success": false,
+	"message": "An error message",
+	"reason": "A simpler error message (if necessary)"
 }
 ```
 
