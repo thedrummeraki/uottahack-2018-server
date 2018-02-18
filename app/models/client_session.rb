@@ -7,14 +7,14 @@ class ClientSession < ApplicationRecord
     end
 
     def self.exists auth_token
-        sessions = self.get_all
+        sessions = self.all
         sessions.select{|s| s.auth_token == auth_token}.size > 0
     end
 
     def self.create_new
         session = self.new
         session.regenerate_auth_token
-        session
+        session.save ? session : nil
     end
 
     def self.get_all

@@ -1,13 +1,12 @@
 class ApiController < ApplicationController
 
-    protect_from_forgery with: :null_session
-
     def new_auth_token
         client_ip = request.remote_ip
         client_session = ClientSession.create_new
+        auth_token = client_session.nil? ? nil : client_session.auth_token
         render json: {
-            success: true,
-            auth_token: client_session.auth_token
+            success: !client_session.nil?,
+            auth_token: auth_token
         }
     end
 

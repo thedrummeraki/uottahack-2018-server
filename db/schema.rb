@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180217215657) do
+ActiveRecord::Schema.define(version: 20180217230245) do
 
   create_table "client_sessions", force: :cascade do |t|
     t.string   "auth_token"
@@ -18,6 +18,21 @@ ActiveRecord::Schema.define(version: 20180217215657) do
     t.datetime "updated_at",   null: false
     t.string   "client_ip"
     t.boolean  "session_used"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string   "name"
+    t.string   "address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tickets", force: :cascade do |t|
+    t.string   "ticket_code"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "ticket_count"
+    t.boolean  "in_use"
   end
 
 end
