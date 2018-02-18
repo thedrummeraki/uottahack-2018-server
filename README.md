@@ -10,6 +10,18 @@ This is very short documentation explaining how this (side-) project works. This
 https://uottahack-2018.herokuapp.com
 ```
 
+**JSON Error responses**
+You will get a JSON error body looking like the following:
+```json
+{
+	success: false,
+	message: "An error message",
+	reason: "A simpler error message (if necessary)"
+}
+```
+
+If there are no `message` or `reason` JSON fields but the `success` field is `false`, then the attempted action was __not__ successful. You should try again or check your parameters.
+
 **HTTP endpoints**
 Description: Get a new API token necessary for all requests. No request body/parameters needed.
 ```

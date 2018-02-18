@@ -15,7 +15,8 @@ class AuthApiController < ApplicationController
         render json: {
             success: false,
             message: 'Please refer to the documentation at https://github.com/thedrummeraki/uottahack-2018-server.',
-            reason: reason
+            reason: reason,
+            ticket_code: nil,
         }
     else
         message = "This ticket was already cancelled!" if ticket.in_use == false
@@ -24,7 +25,8 @@ class AuthApiController < ApplicationController
         render json: {
             success: success,
             ticket_code: ticket_code,
-            message: message
+            message: message,
+            reason: nil
         }
     end
   end
@@ -35,7 +37,9 @@ class AuthApiController < ApplicationController
         render json: {
             success: false,
             message: "Please specify the ticket code with your parameters.",
-            reason: "No ticket code"
+            reason: "No ticket code",
+            errors: [],
+            ticket: nil
         }
         return
      end
@@ -45,7 +49,9 @@ class AuthApiController < ApplicationController
         render json: {
             success: false,
             message: "The ticket \"#{ticket_code}\" is already in use. Please add another one.",
-            reason: "Duplicate ticket"
+            reason: "Duplicate ticket",
+            errors: [],
+            ticket: nil
         }
         return
      elsif !ticket.nil?
@@ -53,7 +59,8 @@ class AuthApiController < ApplicationController
         render json: {
             success: success,
             message: ("We are sorry but we couldn't mark \"#{ticket_code}\" as used." unless success),
-            errors: (ticket.errors unless success)
+            errors: ticket.errors.to_a,
+            ticket: nil
         }
         return
      end
@@ -63,7 +70,10 @@ class AuthApiController < ApplicationController
      ticket = Ticket.create ticket_code: ticket_code
      render json: {
         success: !ticket.nil?,
-        ticket: ticket
+        ticket: ticket,
+        message: nil,
+        errors: [],
+        reason: nil
      }
   end
 
@@ -74,6 +84,7 @@ class AuthApiController < ApplicationController
             success: false,
             message: "There are no tickets at the moment and therefore going to the next ticket is impossible. Please try again after at least one unused ticket has been used.",
             reason: "No tickets exist on the system",
+            errors: [],
             url: "/api/tickets/new?auth_token=your-token"
         }
         return
@@ -86,6 +97,7 @@ class AuthApiController < ApplicationController
      render json: {
         success: success,
         message: message,
+        reason: nil,
         errors: errors.to_a
      }
   end
